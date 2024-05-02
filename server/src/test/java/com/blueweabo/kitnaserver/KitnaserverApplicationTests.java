@@ -1,10 +1,10 @@
-package com.blueweabo.kitnaserver.server;
+package com.blueweabo.kitnaserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServerApplicationTests {
+class KitnaserverApplicationTests {
 
 	@Test
 	void contextLoads() {
