@@ -17,10 +17,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name="email", nullable = false, unique = true, length = 512)
+    @Column(name="email", nullable = false, unique = true, length = 1024)
     private String email;
 
-    @Column(name="userpassword", nullable = false, length = 1024)
+    @Column(name="password", nullable = false, length = 128)
     private String password;
 
 

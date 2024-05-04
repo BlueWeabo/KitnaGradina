@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/email")
-    public ResponseEntity<User> getUserByEmail(@RequestBody String id) {
-        Optional<User> user = service.getUserByEmail(id);
+    public ResponseEntity<User> getUserByEmail(@RequestBody String email) {
+        Optional<User> user = service.getUserByEmail(email);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
