@@ -28,7 +28,11 @@ public class Client {
     private String name;
 
     @Column(name = "telephone", nullable = false, unique = true)
+
     private String telephone;
+
+    @Column(name = "notes", nullable = true)
+    private String notes;
 
     @OneToMany(mappedBy = "client")
     private Set<ClientAddress> addresses;
@@ -78,4 +82,12 @@ public class Client {
         this.orders = orders;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
+

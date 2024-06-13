@@ -24,6 +24,9 @@ import {
     useColorScheme,
     View,
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import { Dropdown } from 'react-native-element-dropdown';
+import Geocoder from 'react-native-geocoding';
 import MapView, { LatLng, PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
@@ -47,52 +50,80 @@ const LAT_DELTA = 0.4;
 const LONG_DELTA = LAT_DELTA * ASPECT_RATIO;
 const SERVER_API_KEY = "12b6bcf1-c8fe-43c4-b01f-6684129e8bdf";
 const GOOGLE_API_KEY = "AIzaSyCJrOQvo7rUV3VKJt8y183jbp5z98nasDk";
-
-function Section({ children, title }: SectionProps): React.JSX.Element {
-    const isDarkMode = useColorScheme() === 'dark';
-    return (
-        <View style={styles.sectionContainer}>
-            <Text
-                style={[
-                    styles.sectionTitle,
-                    {
-                        color: isDarkMode ? Colors.white : Colors.black,
-                    },
-                ]}>
-                {title}
-            </Text>
-            <Text
-                style={[
-                    styles.sectionDescription,
-                    {
-                        color: isDarkMode ? Colors.light : Colors.dark,
-                    },
-                ]}>
-                {children}
-            </Text>
-        </View>
-    );
-}
+const SERVER_URL = "kitnaserver.blueweabo.com";
 
 {
-    request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => result === RESULTS.GRANTED);
-    request(PERMISSIONS.ANDROID.CALL_PHONE)
+    request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => result === RESULTS.GRANTED);;
+    request(PERMISSIONS.ANDROID.CALL_PHONE);
+    Geocoder.init(GOOGLE_API_KEY);
+}
+type Order = {
+    id: String,
+    productsToDeliver: Object,
+    productsDelivered: Object,
+    location: String,
+    date: Date,
 }
 
 function App(): React.JSX.Element {
-    const isDarkMode = useColorScheme() === 'dark';
     const [location, setLocation] = useState<LatLng>({latitude:0, longitude:0});
     const [region, setRegion] = useState<Region>({latitude: 0, longitude: 0, latitudeDelta: LAT_DELTA, longitudeDelta: LONG_DELTA});
     const [time, setTime] = useState<number>(0);
     const [page, setPage] = useState<number>(0);
-    const [currentOrder, setCurrentOrder] = useState(null);
+    const [currentOrder, setCurrentOrder] = useState<Order>();
+    const [currentDestination, setDistination] = useState<LatLng>();
     const mapRef = useRef(null);
 
-    const backgroundStyle = {
-        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    };
-
     function generatePage(): React.JSX.Element {
+        const [createPage, setCreatePage] = useState<number>(0);
+        const [orderDate, setOrderDate] = useState<Date>(new Date());
+
+        function generateCreatePage(): React.JSX.Element {
+            switch (createPage) {
+                case 0:
+                    return (<View style={styles.container}>
+                        <Text style={styles.label}>Name</Text>
+                        <TextInput placeholder='enter client name'/>
+                        <Text style={styles.label}>Address</Text>
+                        <TextInput placeholder='enter client Address'/>
+                        <Text style={styles.label}>Telephone</Text>
+                        <TextInput placeholder='enter client telephone' inputMode='tel'/>
+                        <Text style={styles.label}>Notess</Text>
+                        <TextInput placeholder='enter client Notes'/>
+                        <Button title='Create' color={"#4406cd"} onPress={() => {
+
+                        }}/>
+                    </View>);
+                case 1:
+                    return (<View style={styles.container}>
+                        <Text style={styles.label}>Client</Text>
+                        <Dropdown data={[3,2,1]} labelField={"toString"} valueField={"toString"} onChange={()=>{}}/>
+                        <Text style={styles.label}>Address</Text>
+                        <Dropdown data={[3,2,1]} labelField={"toString"} valueField={"toString"} onChange={()=>{}}/>
+                        <Text style={styles.label}>Delivery Date</Text>
+                        <DatePicker mode='date' date={orderDate} onDateChange={setOrderDate}/>
+                        <Text style={styles.label}>Products</Text>
+                        <TextInput placeholder='enter ordered products'/>
+                        <Button title='Create' color={"#4406cd"} onPress={() => {
+
+                        }}/>
+                    </View>);
+                case 2:
+                    return (<View style={styles.container}>
+                        <Text style={styles.label}>Name</Text>
+                        <TextInput placeholder='enter product name'/>
+                        <Text style={styles.label}>Unit</Text>
+                        <TextInput placeholder='enter product unit'/>
+                        <Text style={styles.label}>Price per unit</Text>
+                        <TextInput placeholder='enter unit price' inputMode='decimal'/>
+                        <Button title='Create' color={"#4406cd"} onPress={() => {
+
+                        }}/>
+                    </View>);
+                default:
+                    return (<View style={styles.container}> </View>);
+            }
+        }
         switch (page) {
             case 0:
                 return (<View style={styles.container}>
@@ -120,54 +151,66 @@ function App(): React.JSX.Element {
                             showsUserLocation= {true}
                             showsMyLocationButton= {true}
                             followsUserLocation={true}
-                            mapPadding= {{top:Dimensions.get('window').height/1.8, right:5, left:5, bottom:5}}
+                            mapPadding= {{top:Dimensions.get('window').height/2, right:5, left:5, bottom:5}}
                         >
                             <MapViewDirections
                                 origin={location}
-                                destination={{latitude: 43.217759600802324,longitude: 27.89225639844444}}
+                                destination={currentDestination}
                                 apikey={GOOGLE_API_KEY}
                                 strokeWidth={4}
                                 strokeColor='lightblue'
                             />
                         </MapView>
                     </View>
-                </View>)
-            case 2:
-                return (<View style={styles.container}>
-                    <View style={{...styles.uiContainer, ...backgroundStyle}}>
+                    <View style={styles.uiContainer}>
                         <Text>
                             Some random text 2.
                         </Text>
                         <Text>
                         </Text>
-                        <Button title='call' onPress={() => {
-                            Linking.openURL('tel:+359876140939');
+                        <Button title='Update' color={"#4406cd"} onPress={() => {
                         }}/>
                     </View>
                 </View>)
+            case 2:
+                return (<View style={styles.container}>
+                    <View style={styles.navigationContainer}>
+                        <View style={styles.navigationButton}>
+                            <Button title='Client' onPress={()=>{setCreatePage(0)}} color={createPage == 0 ? "#40b4d1" : "#406cd1"}></Button>
+                        </View>
+                        <View style={styles.navigationButton}>
+                            <Button title='Order' onPress={()=>{setCreatePage(1)}} color={createPage == 1 ? "#40b4d1" : "#406cd1"}></Button>
+                        </View>
+                        <View style={styles.navigationButton}>
+                            <Button title='Product' onPress={()=>{setCreatePage(2)}} color={createPage == 2 ? "#40b4d1" : "#406cd1"}></Button>
+                        </View>
+                    </View>
+                    {generateCreatePage()}
+                </View>);
             case 3:
                 return (<View style={styles.container}>
-                </View>)
+                </View>);
             default:
                 return (<View style={styles.container}>
-                </View>)
+                </View>);
         }
     }
+
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.navigationContainer}>
                 <View style={styles.navigationButton}>
-                    <Button title='All' onPress={()=>{setPage(0)}}></Button>
+                    <Button title='All' onPress={()=>{setPage(0)}} color={page == 0 ? "#40b4d1" : "#406cd1"}></Button>
                 </View>
                 <View style={styles.navigationButton}>
-                    <Button title='Current' onPress={()=>{setPage(1)}} ></Button>
+                    <Button title='Current' onPress={()=>{setPage(1)}} color={page == 1 ? "#40b4d1" : "#406cd1"}></Button>
                 </View>
                 <View style={styles.navigationButton}>
-                    <Button title='New' onPress={()=>{setPage(2)}}></Button>
+                    <Button title='New' onPress={()=>{setPage(2)}} color={page == 2 ? "#40b4d1" : "#406cd1"}></Button>
                 </View>
                 <View style={styles.navigationButton}>
-                    <Button title='Overview' onPress={()=>{setPage(3)}}></Button>
+                    <Button title='Overview' onPress={()=>{setPage(3)}} color={page == 3 ? "#40b4d1" : "#406cd1"}></Button>
                 </View>
             </View>
             {generatePage()}
@@ -185,20 +228,17 @@ const styles = StyleSheet.create({
     },
     navigationButton: {
         display: "flex",
-        width: "25%",
+        flexGrow: 1
     },
     sectionContainer: {
         marginTop: 32,
         paddingHorizontal: 24,
     },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-    },
-    sectionDescription: {
+    label: {
         marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
+        fontSize: 24,
+        fontWeight: '700',
+        color: "black"
     },
     highlight: {
         fontWeight: '700',
