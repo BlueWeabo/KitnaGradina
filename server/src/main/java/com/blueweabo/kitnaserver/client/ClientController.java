@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("api/client")
@@ -29,7 +30,7 @@ public class ClientController {
     }
 
     @GetMapping("/id/{id}")
-    public Optional<Client> getClientById(UUID id) {
+    public Optional<Client> getClientById(@PathVariable("id") UUID id) {
         return service.getClientById(id);
     }
 

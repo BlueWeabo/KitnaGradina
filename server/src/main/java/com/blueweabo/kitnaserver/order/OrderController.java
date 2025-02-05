@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.blueweabo.kitnaserver.client.Client;
 
@@ -39,7 +40,7 @@ public class OrderController {
     }
 
     @GetMapping("/id/{id}")
-    public Optional<Order> getOrderById(UUID id) {
+    public Optional<Order> getOrderById(@PathVariable("id") UUID id) {
         return service.getOrderById(id);
     }
 

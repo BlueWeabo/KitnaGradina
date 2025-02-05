@@ -12,7 +12,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="orderedProducts")
+@Table(name="ordered_products")
 public class OrderedProduct {
 
     @EmbeddedId

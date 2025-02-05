@@ -11,7 +11,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="clientAddresses")
+@Table(name="client_addresses")
 public class ClientAddress {
 
     @EmbeddedId
