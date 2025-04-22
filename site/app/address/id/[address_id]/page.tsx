@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { AddressType } from "@/components/Address";
 import { UUID } from "crypto";
 import Link from "next/link";
@@ -12,20 +13,18 @@ export default async function EditProduct({ params }: { params: Promise<{ addres
             "KG-API-KEY": process.env.API_KEY ? process.env.API_KEY : "",
         },
     }).then(data => data.json());
-    console.log(ADDRESS);
     async function editProduct(formData: FormData) {
         "use server";
-        console.log(formData);
-        let id = formData.get("id");
-        let address_address = formData.get("address_address");
+        const id = formData.get("id");
+        const address_address = formData.get("address_address");
         if (id === null || address_address === null) {
             return;
         }
-        let address: AddressType = {
+        const address: AddressType = {
             id: id.toString() as UUID,
             address: address_address.toString(),
         }
-        let request: Request = new Request(process.env.API_SERVER + "/address/save", {
+        const request: Request = new Request(process.env.API_SERVER + "/address/save", {
             method: "POST",
             body: JSON.stringify(address),
             headers: {
@@ -38,17 +37,16 @@ export default async function EditProduct({ params }: { params: Promise<{ addres
     }
     async function deleteProduct(formData: FormData) {
         "use server"
-        console.log(formData);
-        let id = formData.get("id");
-        let address_address = formData.get("address_address");
+        const id = formData.get("id");
+        const address_address = formData.get("address_address");
         if (id === null || address_address === null) {
             return;
         }
-        let address: AddressType = {
+        const address: AddressType = {
             id: id.toString() as UUID,
             address: address_address.toString(),
         }
-        let request: Request = new Request(process.env.API_SERVER + "/address/delete", {
+        const request: Request = new Request(process.env.API_SERVER + "/address/delete", {
             method: "DELETE",
             body: JSON.stringify(address),
             headers: {
@@ -60,18 +58,18 @@ export default async function EditProduct({ params }: { params: Promise<{ addres
         redirect("/address");
     }
     return (<div className="grid grid-cols-2 p-8">
-        <div className="mt-12 col-span-2 text-center text-3xl">Creating Product</div>
+        <div className="mt-12 col-span-2 text-center text-3xl">Редактиране на адрес</div>
         <form className="grid col-span-2 grid-cols-2 gap-4 mt-4" action={editProduct}>
-            <label>Address</label>
+            <label>Адрес</label>
             <input type="text" name="address_address" required defaultValue={ADDRESS.address} />
-            <Link href="/address" className="bg-green-200 dark:bg-green-900 rounded-md m-4 text-2xl text-center">Exit</Link>
-            <button type="submit" className="bg-green-200 dark:bg-green-900 rounded-md m-4 text-2xl">Save</button>
+            <Link href="/address" className="bg-green-500 rounded-md m-4 text-2xl text-center">Назад</Link>
+            <button type="submit" className="bg-green-500 rounded-md m-4 text-2xl">Запази</button>
             <input type="text" name="id" hidden defaultValue={address_id} />
         </form>
         <form className="grid grid-cols-2 col-span-2" action={deleteProduct} >
             <input type="text" name="address_address" required defaultValue={ADDRESS.address} hidden/>
             <input type="text" name="id" hidden defaultValue={address_id} />
-            <button type="submit" className="bg-green-200 dark:bg-green-900 rounded-md m-4 text-2xl">Delete</button>
+            <button type="submit" className="bg-green-500 rounded-md m-4 text-2xl">Изтрий</button>
         </form>
     </div>);
 }
