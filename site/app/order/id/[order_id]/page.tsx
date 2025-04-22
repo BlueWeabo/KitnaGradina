@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic'
 import { AddressType } from "@/components/Address";
 import { ClientType } from "@/components/Client";
+import ClientAddressSelection from "@/components/ClientAddressSelection";
 import { DeliveredProductArrayInput } from "@/components/DeliveredProductArrayInput";
 import { DeliveredProductType, OrderedProductType, OrderType } from "@/components/Order";
 import OrderedProductArrayInput from "@/components/OrderedProductArrayInput";
@@ -127,7 +128,7 @@ export default async function EditOrder({ params }: { params: Promise<{ order_id
                 "Content-type": "application/json",
             },
         });
-        fetch(request);
+        await fetch(request);
         redirect("/order");
     }
     async function deleteOrder(formData: FormData) {
@@ -147,21 +148,14 @@ export default async function EditOrder({ params }: { params: Promise<{ order_id
                 "Content-type": "application/json",
             },
         });
-        fetch(request);
+        await fetch(request);
         redirect("/order");
     }
     return (<div className="grid grid-cols-2 p-8">
         <div className="mt-12 col-span-2 text-center text-3xl">Редактиране на поръчка</div>
         <form className="grid col-span-2 grid-cols-2 gap-4 mt-4" action={editOrder}>
             <input type="text" hidden defaultValue={order_id} name="order_id" />
-            <select name="order_client_id" defaultValue={ORDER.client.id?.toString()} required>
-                <option value="">Избери клиент</option>
-                {CLIENTS.map(client => <option key={client.id?.toString()} value={`${client.id}`}>{client.name}</option>)}
-            </select>
-            <select name="order_address_id" defaultValue={ORDER.address.id?.toString()} required>
-                <option value="">Избери адрес</option>
-                {ADDRESSES.map(address => <option key={address.id?.toString()} value={`${address.id}`}>{address.address}</option>)}
-            </select>
+            <ClientAddressSelection clients={CLIENTS} currentOrder={ORDER}/>
             <input type="date" name="order_date" className="text-center bg-slate-100 col-span-2" defaultValue={ORDER.deliveryDate.toJSON().split('T')[0]} required/>
             <div>
                 <OrderedProductArrayInput countName="order_ordered_product_count" fieldString="Поръчан Продукт" fieldName="order_ordered_product" data={PRODUCTS} startingInputs={ORDER.orderedProducts}  countString="Брой Поръчани Продукти"/>

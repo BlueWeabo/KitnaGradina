@@ -1,12 +1,14 @@
 import { UUID } from "crypto";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { AddressType } from "./Address";
 
 export type ClientType = {
     id: UUID | null;
     name: string;
     telephone: string;
     notes: string;
+    addresses: Array<{address: AddressType}>;
 }
 
 export interface ClientProps {

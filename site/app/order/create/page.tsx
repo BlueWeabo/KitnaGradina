@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic'
 import { AddressType } from "@/components/Address";
 import { ClientType } from "@/components/Client";
+import ClientAddressSelection from "@/components/ClientAddressSelection";
 import { DeliveredProductType, OrderedProductType, OrderType } from "@/components/Order";
 import { ProductType } from "@/components/Product";
 import ProductArrayInput from "@/components/ProductArrayInput";
@@ -92,21 +93,14 @@ export default async function CreateOrder(): Promise<ReactNode> {
                 "Content-type": "application/json",
             },
         });
-        fetch(request);
+        await fetch(request);
         redirect("/order");
     }
 
     return (<div className="grid grid-cols-2 p-8">
         <div className="mt-12 col-span-2 text-center text-3xl">Създаване на поръчка</div>
         <form className="grid col-span-2 grid-cols-2 gap-4 mt-4" action={createOrder}>
-            <select name="order_client_id" required>
-                <option value="">Избери клиент</option>
-                {CLIENTS.map(client => <option key={client.id?.toString()} value={`${client.id}`}>{client.name}</option>)}
-            </select>
-            <select name="order_address_id" required>
-                <option value="">Избери адрес</option>
-                {ADDRESSES.map(address => <option key={address.id?.toString()} value={`${address.id}`}>{address.address}</option>)}
-            </select>
+            <ClientAddressSelection clients={CLIENTS} currentOrder={null}/>
             <ProductArrayInput countString="Брой поръчани продукти" countName="order_ordered_product_count" fieldString="Поръчан Продукт"
                 fieldName="order_ordered_product" data={PRODUCTS} startingCount={1}/>
             <input type="date" name="order_date" className="text-center bg-slate-100" required/>

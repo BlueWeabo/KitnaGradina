@@ -26,7 +26,7 @@ export default function CreateProduct(): ReactNode {
                 "Content-type": "application/json",
             },
         });
-        fetch(request);
+        await fetch(request);
         redirect("/product");
     }
     return (<div className="grid grid-cols-2 p-8">

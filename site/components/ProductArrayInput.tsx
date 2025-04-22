@@ -40,7 +40,7 @@ export default function ProductArrayInput({ countName, fieldString, fieldName, d
     }
     return (<div className="grid grid-cols-2 gap-2">
         <button className="bg-green-500 rounded-md text-lg p-1" onClick={() => {setInputs(new Array<ReactNode>(inputs.length + 1)); inputIds.push(""); setIds(new Array<string>(...inputIds));}} type="button">Добави поръчан продукт</button>
-        <button className="bg-green-500 rounded-md text-lg p-1" onClick={() => {setInputs(new Array<ReactNode>(inputs.length - 1)); inputIds.pop(); setIds(new Array<string>(...inputIds));}} type="button">Премахни поръчан продукт</button>
+        <button className="bg-green-500 rounded-md text-lg p-1" onClick={() => {setInputs(new Array<ReactNode>(Math.max(inputs.length - 1, 0))); inputIds.pop(); setIds(new Array<string>(...inputIds));}} type="button">Премахни поръчан продукт</button>
         <input type="number" step={1} name={countName} value={inputs.length} readOnly hidden />
         {inputs}
     </div>);

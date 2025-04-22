@@ -32,7 +32,7 @@ export default async function EditProduct({ params }: { params: Promise<{ addres
                 "Content-type": "application/json",
             },
         });
-        fetch(request);
+        await fetch(request);
         redirect("/address");
     }
     async function deleteProduct(formData: FormData) {
@@ -54,7 +54,7 @@ export default async function EditProduct({ params }: { params: Promise<{ addres
                 "Content-type": "application/json",
             },
         });
-        fetch(request);
+        await fetch(request);
         redirect("/address");
     }
     return (<div className="grid grid-cols-2 p-8">
