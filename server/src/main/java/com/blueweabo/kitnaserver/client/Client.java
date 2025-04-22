@@ -1,9 +1,8 @@
 package com.blueweabo.kitnaserver.client;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
-import com.blueweabo.kitnaserver.address.Address;
 import com.blueweabo.kitnaserver.clientaddress.ClientAddress;
 import com.blueweabo.kitnaserver.order.Order;
 
@@ -12,7 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,11 +33,11 @@ public class Client {
     private String notes;
 
     @OneToMany(mappedBy = "client")
-    private Set<ClientAddress> addresses;
+    private List<ClientAddress> addresses;
 
     @OneToMany(mappedBy = "client")
     @JsonIgnore
-    private Set<Order> orders;
+    private List<Order> orders;
 
     public Client() {}
 
@@ -55,11 +53,11 @@ public class Client {
         return telephone;
     }
 
-    public Set<ClientAddress> getAddresses() {
+    public List<ClientAddress> getAddresses() {
         return addresses;
     }
 
-    public Set<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
@@ -75,11 +73,11 @@ public class Client {
         this.telephone = telephone;
     }
 
-    public void setAddresses(Set<ClientAddress> addresses) {
+    public void setAddresses(List<ClientAddress> addresses) {
         this.addresses = addresses;
     }
 
-    public void setOrders(Set<Order> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 
