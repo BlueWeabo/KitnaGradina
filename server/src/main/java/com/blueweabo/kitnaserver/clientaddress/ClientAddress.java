@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="client_addresses")
@@ -20,6 +21,7 @@ public class ClientAddress {
     @ManyToOne
     @MapsId("clientId")
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     Client client;
 
     @ManyToOne

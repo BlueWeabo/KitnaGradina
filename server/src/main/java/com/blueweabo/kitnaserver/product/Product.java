@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.blueweabo.kitnaserver.deliveredproduct.DeliveredProduct;
 import com.blueweabo.kitnaserver.orderedproduct.OrderedProduct;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "products")
@@ -31,10 +33,12 @@ public class Product {
     @Column(name="pricePerUnit", nullable = false, precision = 2 )
     private double pricePerUnit;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<OrderedProduct> orderedProducts;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<DeliveredProduct> deliveredProducts;
 
     public Product() {}

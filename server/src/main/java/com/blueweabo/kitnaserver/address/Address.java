@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "addresses")
@@ -26,9 +27,11 @@ public class Address {
     private String address;
 
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
     private Set<ClientAddress> clients;
 
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
     private Set<Order> orders;
 
     public Address() {}
