@@ -17,7 +17,7 @@ export function AddressArrayInput({ countName, fieldString, fieldName, data, sta
         inputs[i]=(<div className="grid grid-cols-2 col-span-2 gap-4 border-black border-solid border-2" key={`${fieldName}-container-${i}`}>
             <label key={`${fieldName}-label-${i}`}>{`${fieldString} ${i + 1}`}</label>
             <select key={`${fieldName}-${i}`} name={`${fieldName}_${i}`} required value={inputIds[i]} data-index={i} onChange={(e)=>{
-                let index: number = new Number(e.currentTarget.getAttribute("data-index")) as number;
+                const index: number = new Number(e.currentTarget.getAttribute("data-index")) as number;
                 inputIds[index] = e.currentTarget.value;
                 setInputs(new Array<ReactNode>(...inputs));
                 setIds(new Array<string>(...inputIds));
@@ -29,7 +29,7 @@ export function AddressArrayInput({ countName, fieldString, fieldName, data, sta
             <input className="bg-slate-100" required value={startingInputs.length > i ? startingInputs[i].address : ""} onChange={()=>{}}
                 key={`${fieldName}_address_${i}`} type="text" step={0.01} name={`${fieldName}_${i}_address`} />
             <button data-index={i} className="bg-green-500 rounded-md text-lg p-1" type="button" onClick={(e)=>{
-                let index: number = new Number(e.currentTarget.getAttribute("data-index")) as number;
+                const index: number = new Number(e.currentTarget.getAttribute("data-index")) as number;
                 inputs.splice(index, 1);
                 inputIds.splice(index, 1);
                 setInputs(new Array<ReactNode>(...inputs));
