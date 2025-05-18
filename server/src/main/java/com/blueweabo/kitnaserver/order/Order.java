@@ -18,8 +18,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="orders")
@@ -45,6 +43,8 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<DeliveredProduct> deliveredProducts;
+
+    private int priority;
 
     public Order() {}
 
@@ -72,6 +72,10 @@ public class Order {
         return deliveredProducts;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
     public void setId(UUID id) {
         this.id = id;
     }
@@ -94,6 +98,10 @@ public class Order {
 
     public void setDeliveredProducts(List<DeliveredProduct> deliveredProducts) {
         this.deliveredProducts = deliveredProducts;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
 }

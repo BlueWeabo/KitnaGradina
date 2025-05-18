@@ -12,6 +12,7 @@ export type OrderType = {
     deliveryDate: Date;
     orderedProducts: Array<OrderedProductType>;
     deliveredProducts: Array<DeliveredProductType>;
+    priority: number;
 };
 
 export type OrderedProductType = {

@@ -83,7 +83,8 @@ export default async function CreateOrder(): Promise<ReactNode> {
             address: order_address,
             deliveredProducts: new Array<DeliveredProductType>(),
             orderedProducts: order_ordered_products,
-            deliveryDate: new Date(order_date.toString())
+            deliveryDate: new Date(order_date.toString()),
+            priority: 0
         }
         const request: Request = new Request(process.env.API_SERVER + "/order/save", {
             method: "POST",

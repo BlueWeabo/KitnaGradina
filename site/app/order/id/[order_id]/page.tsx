@@ -54,7 +54,8 @@ export default async function EditOrder({ params }: { params: Promise<{ order_id
         const order_address_id = formData.get("order_address_id");
         const order_date = formData.get("order_date");
         const order_ordered_product_count = formData.get("order_ordered_product_count");
-        if (order_id == null || order_client_id === null || order_address_id === null || order_ordered_product_count === null || order_date === null) {
+        const order_priority = formData.get("order_priority");
+        if (order_id == null || order_client_id === null || order_address_id === null || order_ordered_product_count === null || order_date === null || order_priority === null) {
             return;
         }
         const order_ordered_products: Array<OrderedProductType> = new Array<OrderedProductType>();
@@ -118,7 +119,8 @@ export default async function EditOrder({ params }: { params: Promise<{ order_id
             address: order_address,
             deliveredProducts: order_delivered_products,
             orderedProducts: order_ordered_products,
-            deliveryDate: new Date(order_date.toString())
+            deliveryDate: new Date(order_date.toString()),
+            priority: new Number(order_priority.toString()) as number
         }
         const request: Request = new Request(process.env.API_SERVER + "/order/save", {
             method: "POST",
@@ -157,6 +159,8 @@ export default async function EditOrder({ params }: { params: Promise<{ order_id
             <input type="text" hidden defaultValue={order_id} name="order_id" />
             <ClientAddressSelection clients={CLIENTS} currentOrder={ORDER}/>
             <input type="date" name="order_date" className="text-center bg-slate-100 col-span-2" defaultValue={ORDER.deliveryDate.toJSON().split('T')[0]} required/>
+            <label className="col-span-2 md:col-span-1">Приоритет</label>
+            <input type="number" name="order_priority" step={1} className="bg-slate-100 col-span-2 md:col-span-1" defaultValue={ORDER.priority} required/>
             <div className="col-span-2 md:col-span-1">
                 <OrderedProductArrayInput countName="order_ordered_product_count" fieldString="Поръчан Продукт" fieldName="order_ordered_product" data={PRODUCTS} startingInputs={ORDER.orderedProducts}  countString="Брой Поръчани Продукти"/>
             </div>
