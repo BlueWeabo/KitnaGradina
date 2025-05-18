@@ -119,12 +119,12 @@ export default async function EditClient({ params }: { params: Promise<{ client_
     return (<div className="grid grid-cols-2 p-8">
         <div className="mt-12 col-span-2 text-center text-3xl">Редактиране на Клиент</div>
         <form className="grid col-span-2 grid-cols-2 gap-4 mt-4" action={editClient}>
-            <label>Име</label>
-            <input type="text" name="client_name" required defaultValue={CLIENT.name} />
-            <label>Телефон</label>
-            <input type="text" name="client_telephone" required defaultValue={CLIENT.telephone} />
-            <label>Бележки</label>
-            <input type="text" name="client_notes" required defaultValue={CLIENT.notes} />
+            <label className="col-span-2 md:col-span-1">Име</label>
+            <input type="text" name="client_name" required defaultValue={CLIENT.name} className="bg-slate-100 col-span-2 md:col-span-1"/>
+            <label className="col-span-2 md:col-span-1">Телефон</label>
+            <input type="text" name="client_telephone" required defaultValue={CLIENT.telephone} className="bg-slate-100 col-span-2 md:col-span-1"/>
+            <label className="col-span-2 md:col-span-1">Бележки</label>
+            <input type="text" name="client_notes" required defaultValue={CLIENT.notes} className="bg-slate-100 col-span-2 md:col-span-1"/>
             <AddressArrayInput countName="client_address_count" fieldName="client_address" fieldString="Адрес на клиент" data={ADDRESSES} startingInputs={CLIENT.addresses.map(a=>a.address)}/>
             <Link href="/client" className="bg-green-500 rounded-md m-4 text-2xl text-center">Назад</Link>
             <button type="submit" className="bg-green-500 rounded-md m-4 text-2xl">Запази</button>

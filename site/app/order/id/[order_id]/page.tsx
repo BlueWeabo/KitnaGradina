@@ -157,10 +157,10 @@ export default async function EditOrder({ params }: { params: Promise<{ order_id
             <input type="text" hidden defaultValue={order_id} name="order_id" />
             <ClientAddressSelection clients={CLIENTS} currentOrder={ORDER}/>
             <input type="date" name="order_date" className="text-center bg-slate-100 col-span-2" defaultValue={ORDER.deliveryDate.toJSON().split('T')[0]} required/>
-            <div>
+            <div className="col-span-2 md:col-span-1">
                 <OrderedProductArrayInput countName="order_ordered_product_count" fieldString="Поръчан Продукт" fieldName="order_ordered_product" data={PRODUCTS} startingInputs={ORDER.orderedProducts}  countString="Брой Поръчани Продукти"/>
             </div>
-            <div>
+            <div className="col-span-2 md:col-span-1">
                 <DeliveredProductArrayInput countName="order_delivered_product_count" fieldString="Доставен Продукт" fieldName="order_delivered_product" data={PRODUCTS} startingInputs={ORDER.deliveredProducts} countString="Брой Доставени Продукти"/>
             </div>
             <Link href="/order" className="bg-green-500 rounded-md m-4 text-2xl text-center">Назад</Link>

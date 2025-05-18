@@ -103,7 +103,7 @@ export default async function CreateOrder(): Promise<ReactNode> {
             <ClientAddressSelection clients={CLIENTS} currentOrder={null}/>
             <ProductArrayInput countString="Брой поръчани продукти" countName="order_ordered_product_count" fieldString="Поръчан Продукт"
                 fieldName="order_ordered_product" data={PRODUCTS} startingCount={1}/>
-            <input type="date" name="order_date" className="text-center bg-slate-100" required/>
+            <input type="date" name="order_date" className="text-center bg-slate-100 col-span-2" required/>
             <button type="reset" className="bg-green-500 rounded-md m-4 text-2xl">Clear</button>
             <button type="submit" className="bg-green-500 rounded-md m-4 text-2xl">Save</button>
         </form>

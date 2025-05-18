@@ -11,7 +11,7 @@ export type ClientAddressSelectionProps = {
 
 export default function ClientAddressSelection({clients, currentOrder = null} : ClientAddressSelectionProps) : ReactNode {
     const [client, setClient] = useState<ClientType | null>(currentOrder ? currentOrder.client : null)
-    return (<div className="grid grid-cols-2 col-span-2 gap-2">
+    return (<div className="grid grid-cols-1 md:grid-cols-2 col-span-2 gap-4 md:gap-2">
             <select name="order_client_id" required onChange={(e) => setClient(clients.filter(c => c.id === e.currentTarget.value)[0])} defaultValue={currentOrder?.client.id?.toString()}>
                 <option value="">Избери клиент</option>
                 {clients.map(client => <option key={client.id?.toString()} value={`${client.id}`}>{client.name}</option>)}

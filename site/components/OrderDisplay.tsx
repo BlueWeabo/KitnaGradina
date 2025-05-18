@@ -9,12 +9,12 @@ export type OrderDisplayProps = {
 
 
 export default function OrderDisplay({ orders }: OrderDisplayProps): ReactNode {
-    const [date, setDate] = useState<Date | null>(new Date(Date.now()));
+    const [date, setDate] = useState<Date | null>(null);
     return (<div className="grid grid-cols-1 gap-2">
         <div className="grid grid-cols-10 gap-2">
-            <input type="date" className="text-center text-2xl bg-slate-200 p-2 col-span-8"
+            <input type="date" className="text-center text-2xl bg-slate-200 p-2 col-span-5 md:col-span-8"
                 onChange={(v) => setDate(new Date(v.currentTarget.value))} />
-            <button type="button" className="bg-green-500 rounded-md text-2xl col-span-2"
+            <button type="button" className="bg-green-500 rounded-md text-2xl col-span-5 md:col-span-2"
                 onClick={()=>setDate(null)}>Нулиране</button>
         </div>
         {orders.filter(o => {

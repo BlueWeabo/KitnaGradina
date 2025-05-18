@@ -16,7 +16,7 @@ export default function ProductArrayInput({ countName, fieldString, fieldName, d
     const [inputs, setInputs] = useState<Array<ReactNode>>(new Array<ReactNode>(startingCount));
     const [inputIds, setIds] = useState<Array<string>>(new Array<string>(startingCount));
     for (let i = 0; i < inputs.length; i++) {
-        inputs[i]=(<div className="grid grid-cols-2 col-span-2 gap-4 border-black border-solid border-2" key={`${fieldName}-container-${i}`}>
+        inputs[i]=(<div className="grid grid-cols-1 md:grid-cols-2 col-span-2 gap-4 border-black border-solid border-2" key={`${fieldName}-container-${i}`}>
             <label key={`${fieldName}-label-${i}`}>{`${fieldString} ${i + 1}`}</label>
             <select key={`${fieldName}-${i}`} name={`${fieldName}_${i}`} required value={inputIds[i]} data-index={i} onChange={(e)=>{
                 const index: number = new Number(e.currentTarget.getAttribute("data-index")) as number;
@@ -38,9 +38,9 @@ export default function ProductArrayInput({ countName, fieldString, fieldName, d
                 setIds(new Array<string>(...inputIds));}}>Премахни</button>
         </div>);
     }
-    return (<div className="grid grid-cols-2 gap-2">
-        <button className="bg-green-500 rounded-md text-lg p-1" onClick={() => {setInputs(new Array<ReactNode>(inputs.length + 1)); inputIds.push(""); setIds(new Array<string>(...inputIds));}} type="button">Добави поръчан продукт</button>
-        <button className="bg-green-500 rounded-md text-lg p-1" onClick={() => {setInputs(new Array<ReactNode>(Math.max(inputs.length - 1, 0))); inputIds.pop(); setIds(new Array<string>(...inputIds));}} type="button">Премахни поръчан продукт</button>
+    return (<div className="grid grid-cols-2 gap-2 col-span-2">
+        <button className="bg-green-500 rounded-md text-lg p-1 col-span-2 md:col-span-1" onClick={() => {setInputs(new Array<ReactNode>(inputs.length + 1)); inputIds.push(""); setIds(new Array<string>(...inputIds));}} type="button">Добави поръчан продукт</button>
+        <button className="bg-green-500 rounded-md text-lg p-1 col-span-2 md:col-span-1" onClick={() => {setInputs(new Array<ReactNode>(Math.max(inputs.length - 1, 0))); inputIds.pop(); setIds(new Array<string>(...inputIds));}} type="button">Премахни поръчан продукт</button>
         <input type="number" step={1} name={countName} value={inputs.length} readOnly hidden />
         {inputs}
     </div>);
