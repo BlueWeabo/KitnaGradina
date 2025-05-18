@@ -45,6 +45,7 @@ public class OrderController {
             existing.setClient(order.getClient());
             existing.setAddress(order.getAddress());
             existing.setDeliveryDate(order.getDeliveryDate());
+            existing.setPriority(order.getPriority());
             for (int i = 0; i < order.getOrderedProducts().size(); i++) {
                 OrderedProduct orderedP = order.getOrderedProducts().get(i);
                 Product product = pservice.getProductById(orderedP.getProduct().getId()).get();

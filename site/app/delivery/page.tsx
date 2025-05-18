@@ -19,6 +19,6 @@ export default async function ClientPage(): Promise<ReactNode> {
                 && o.deliveryDate.getFullYear() == today.getFullYear()}));
     });
     return (<div className="pt-16 grid grid-cols-1 gap-4 px-4">
-        {ORDERS.map(order => <OrderDelivery key={order.id} order={order} />)}
+        {ORDERS.sort((f,o)=>o.priority-f.priority).map(order => <OrderDelivery key={order.id} order={order} />)}
     </div>);
 }

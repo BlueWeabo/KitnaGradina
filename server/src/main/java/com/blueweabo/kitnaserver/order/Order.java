@@ -44,6 +44,7 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<DeliveredProduct> deliveredProducts;
 
+    @Column(name="priority")
     private int priority;
 
     public Order() {}
